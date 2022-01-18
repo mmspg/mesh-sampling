@@ -41,6 +41,12 @@ This script was tested in the same environment as the previous geometry-only sam
 
 CloudCompare software must also be installed in the computer. Additionally, if the script is being run on a headless server, be sure to install *xvfb* in order to run CloudCompare without a graphic interface. The script can be run using the following command:
 
+```shell
+python mesh_sampling_geo_color_shapenet.py input_glob output_dir
+```
+
+The script accepts the following parameters:
+
 * *input_glob* : pattern identifying the mesh files to be sampled.
 * *output_dir* : directory where the generated point clouds are saved. 
 * *--target_points* : target number of points for the sampled point cloud prior to voxelization. 
