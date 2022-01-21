@@ -66,5 +66,5 @@ If you wish to use the provided script in your research, we kindly ask you to ci
 
 [3] Quach, M., G. Valenzise, and F. Dufaux. 2020. “Improved Deep Point Cloud Geometry Compression.” In *2020 IEEE 22nd International Workshop on Multimedia Signal Processing (MMSP)*, 1–6. https://doi.org/10.1109/MMSP48831.2020.9287077.
 
-[4] Davi Lazzarotto and Touradj Ebrahimi. 2022. “Sampling color and geometry point clouds from ShapeNet dataset.” 
+[4] Davi Lazzarotto and Touradj Ebrahimi. 2022. “Sampling color and geometry point clouds from ShapeNet dataset.” https://arxiv.org/abs/2201.06935
 
