@@ -45,14 +45,14 @@ CloudCompare software must also be installed in the computer. Additionally, if t
 python mesh_sampling_geo_color_shapenet.py input_glob output_dir
 ```
 
-The script accepts the following parameters:
+If the script is being run on a headless server, make sure to add *xvfb-run* prior to the above command. The script accepts the following parameters:
 
 * *input_glob* : pattern identifying the mesh files to be sampled.
 * *output_dir* : directory where the generated point clouds are saved. 
 * *--target_points* : target number of points for the sampled point cloud prior to voxelization. 
 * *--resolution* : resolution of the output voxelized point cloud. 
 * *--remove_intermediate_files* : if set to True, the intermediary mesh and point cloud files generated on the process are removed. 
-* *--cloudcompare_bin_path* : path to the CloudCompare binary. If the location of the binary is included in the PATH environment variable, this configuration attribute can be set of "CloudCompare". If the script is being run in a headless server, include the command *xvfb-run* in the beginning of this attribute. 
+* *--cloudcompare_bin_path* : path to the CloudCompare binary. If the location of the binary is included in the PATH environment variable, this configuration attribute can be set of "CloudCompare".  
 
 ## Conditions of use
 

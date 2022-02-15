@@ -26,7 +26,7 @@ import traceback
 import open3d as o3d
 import shutil
 
-def get_duplicate_faces_to_delete(face_matrix, face_quality_array):
+def get_duplicate_faces_to_delete(face_matrix, face_quality_array, threshold=0):
 
 	#Loop through all the faces, identify faces with same vertices, keep only the one with higher 
 	#computed value assigned by the ambient occlusion process
@@ -51,6 +51,9 @@ def get_duplicate_faces_to_delete(face_matrix, face_quality_array):
 
 		already_done[index_faces] = True
 		to_delete[faces_to_delete] = True
+
+	#Delete faces with occlusion value smaller than threshold
+	to_delete = to_delete | (face_quality_array < threshold)
 
 	return to_delete
 
@@ -116,7 +119,7 @@ def run(args):
 		face_quality_array = occluded_mesh.face_quality_array()
 
 		#Gets indices of duplicate faces to be deleted
-		faces_to_delete = get_duplicate_faces_to_delete(face_matrix, face_quality_array)
+		faces_to_delete = get_duplicate_faces_to_delete(face_matrix, face_quality_array, args.occlusion_threshold)
 
 		#Reads the original mesh file
 		with open(input_filepath, 'r') as f:
@@ -212,9 +215,10 @@ if __name__ == "__main__":
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('input_glob', help='Pattern for input meshes.')
     parser.add_argument('output_dir', help='Output directory for saving sampled point clouds.')
-    parser.add_argument('--target_points', help='Number of points sampled before voxelization.', type=int, default=4000000)
+    parser.add_argument('--target_points', help='Number of points sampled before voxelization.', type=int, default=10000000)
     parser.add_argument('--resolution', help='Resolution for voxelization.', type=int,default=1024)
-    parser.add_argument('--remove_intermediate_files', help='Remove meshes and point clouds generated on the process.', type=bool,default=False)
+    parser.add_argument('--occlusion_threshold', help='Minimum accepted occlusion value for sampled faces.', type=float,default=0)
+    parser.add_argument('--remove_intermediate_files', help='Remove meshes and point clouds generated on the process.', type=bool,default=True)
     parser.add_argument('--cloudcompare_bin_path', help='Path to the CloudCompare binary', type=str,default="CloudCompare")
     args = parser.parse_args()
 
