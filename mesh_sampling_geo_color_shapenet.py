@@ -25,6 +25,7 @@ import argparse
 import traceback
 import open3d as o3d
 import shutil
+from tqdm import tqdm
 
 def get_duplicate_faces_to_delete(face_matrix, face_quality_array, threshold=0):
 
@@ -97,7 +98,7 @@ def run(args):
 	current_dir = os.getcwd()
 
 	#Go through mesh files liste as input
-	for n, input_filepath in enumerate(glob.glob(args.input_glob)):
+	for n, input_filepath in tqdm(enumerate(glob.glob(args.input_glob))):
 
 		if input_filepath[-4:] != ".obj":
 			print("Mesh file doesn't have obj extension and couldn't be sampled")
@@ -183,7 +184,7 @@ def run(args):
 		#Sample the generated mesh with CloudCompare
 		sampled_mesh_filename = f"sampled_mesh_{n}.ply"
 		sampled_mesh_filepath = os.path.join(args.output_dir, sampled_mesh_filename)
-		os.system(f"{args.cloudcompare_bin_path} -SILENT -AUTO_SAVE OFF -C_EXPORT_FMT PLY -O {mesh_clean_filepath} -SAMPLE_MESH POINTS {args.target_points} -SAVE_CLOUDS")
+		os.popen(f"{args.cloudcompare_bin_path} -SILENT -AUTO_SAVE OFF -C_EXPORT_FMT PLY -O {mesh_clean_filepath} -SAMPLE_MESH POINTS {args.target_points} -SAVE_CLOUDS").read()
 
 		#Get name of the point cloud saved by CloudCompare and rename it to defined name
 		cloudcompare_pc_path = [x for x in glob.glob(os.path.join(obj_dir, "*.ply")) if "SAMPLED_POINTS" in os.path.split(x)[1]][0]
